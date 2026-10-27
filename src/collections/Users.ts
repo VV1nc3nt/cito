@@ -18,9 +18,10 @@ export const Users: CollectionConfig = {
   access: {
     admin: ({ req: { user } }) => Boolean(user),
     create: isAdmin,
-    // Non-admins can read only themselves: required for the session and /me.
+    // Non-admins can read and update only themselves (session, /me, own email and password).
+    // The role field stays admin-only through field-level access.
     read: isAdminOrSelf,
-    update: isAdmin,
+    update: isAdminOrSelf,
     delete: isAdmin,
   },
   hooks: {
