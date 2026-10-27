@@ -134,5 +134,7 @@
 }
 
 [data-surface='blue'] {
+  /* --muted-dark is only 3.8:1 on --blue-600, below the 4.5:1 text minimum */
+  --text-muted: var(--white);
   --text-accent: var(--white);
 }
