@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
+import '@/styles/tokens.css'
+
 export const metadata: Metadata = {
   title: 'ЦИТО',
   description: 'ФГБУ «Центр информационно-технического обеспечения»',

@@ -1,0 +1,138 @@
+/*
+ * Design tokens — the single source of values for components (docs: 02-design-tokens).
+ * Components use var(--token) only; no raw colours, radii or sizes elsewhere.
+ *
+ * Breakpoints (media queries cannot read custom properties, so they are literals):
+ *   desktop  ≥1200px  — base values below
+ *   tablet   768–1199px — @media (max-width: 1199px)
+ *   mobile   <768px    — @media (max-width: 767px)
+ */
+
+:root {
+  /* Colours */
+  --ink: #0a1030;
+  --ink-2: #121b4a;
+  --ink-3: #17215c;
+  --blue-600: #3352e8;
+  --blue-700: #2338a0;
+  --blue-300: #8ea2ff;
+  --blue-200: #b9c6ff;
+  --red-500: #e0483b;
+  --green-500: #4daa57;
+  --muted: #4a5272;
+  --muted-dark: #c7cff0;
+  --muted-dark-2: #d6daf5;
+  --muted-dark-3: #b4bce0;
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --line: #e3e7f1;
+  --line-2: #dde2ee; /* button borders */
+  --line-2-strong: #cdd3e3; /* field borders */
+  --icon-bg: #ebeefa;
+  --error: #c9352a;
+  --white: #ffffff;
+
+  /* Background grid lines, 64px step */
+  --grid-step: 64px;
+  --grid-line-dark: rgba(142, 162, 255, 0.07);
+  --grid-line-blue: rgba(255, 255, 255, 0.09);
+  --grid-line-light: rgba(35, 56, 160, 0.06);
+
+  /* Surface context: overridden by [data-surface] below */
+  --text: var(--ink);
+  --text-muted: var(--muted);
+  --text-accent: var(--blue-700);
+  --focus-ring: var(--blue-700);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+
+  /* Radii */
+  --radius-tile: 24px;
+  --radius-button: 12px;
+  --radius-icon: 12px;
+  --radius-field: 10px;
+  --radius-pill: 999px;
+
+  /* Shadows and motion */
+  --shadow-card: 0 1px 2px rgba(10, 16, 48, 0.05), 0 8px 24px -10px rgba(10, 16, 48, 0.14);
+  --shadow-card-hover: 0 2px 4px rgba(10, 16, 48, 0.05), 0 20px 44px -14px rgba(10, 16, 48, 0.24);
+  --shadow-button: 0 10px 28px -10px rgba(51, 82, 232, 0.85);
+  --hover-lift: -4px;
+
+  /* Sizes */
+  --tap-min: 44px;
+  --button-height: 56px;
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-pad: 32px;
+  --grid-columns: 12;
+  --grid-gap: 16px;
+  --tile-pad: 32px;
+
+  /* Font families (variables from next/font are set on <html>) */
+  --font-sans: var(--font-onest), Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, 'Courier New', monospace;
+
+  /* Type scale (H2 line-height and heading weight follow the reference layout) */
+  --fw-heading: 600;
+  --fs-h1: clamp(40px, 4.4vw, 64px);
+  --lh-h1: 1.04;
+  --ls-h1: -0.03em;
+  --fs-h2: 44px;
+  --fs-h2-about: 42px;
+  --lh-h2: 1.2;
+  --ls-h2: -0.02em;
+  --fs-lead: 19px;
+  --lh-lead: 1.55;
+  --fs-body: 18px;
+  --lh-body: 1.6;
+  --fs-mono: 12px;
+  --ls-mono: 0.04em;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --container-pad: 24px;
+    --grid-columns: 6;
+    --grid-gap: 12px;
+    --tile-pad: 24px;
+
+    --fs-h1: 44px;
+    --fs-h2: 36px;
+    --fs-h2-about: 32px;
+    --fs-lead: 17px;
+    --fs-body: 17px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --container-pad: 16px;
+    --grid-columns: 1;
+    --grid-gap: 12px;
+    --tile-pad: 22px;
+
+    --fs-h1: 34px;
+    --fs-h2: 30px;
+    --fs-h2-about: 26px;
+    --fs-lead: 17px;
+    --fs-body: 16px;
+  }
+}
+
+/* Dark and blue surfaces: light text and a white focus ring (≥5.9:1 on --blue-600). */
+[data-surface='dark'],
+[data-surface='blue'] {
+  --text: var(--white);
+  --text-muted: var(--muted-dark);
+  --focus-ring: var(--white);
+}
+
+[data-surface='dark'] {
+  --text-accent: var(--blue-300);
+}
+
+[data-surface='blue'] {
+  --text-accent: var(--white);
+}
