@@ -38,5 +38,7 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: process.env.MEDIA_DIR || path.resolve(process.cwd(), 'media'),
     mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'],
+    // Files are uploaded from disk only; no fetching from remote URLs.
+    pasteURL: false,
   },
 }
