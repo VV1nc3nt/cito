@@ -18,6 +18,8 @@ const MAX_UPLOAD_BYTES = 20 * 1024 * 1024
 export default buildConfig({
   admin: {
     user: Users.slug,
+    // The default Gravatar avatar would send requests to an external service.
+    avatar: 'default',
     importMap: {
       baseDir: path.resolve(dirname),
     },
