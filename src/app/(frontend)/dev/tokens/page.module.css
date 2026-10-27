@@ -1,0 +1,295 @@
+.page {
+  padding-block: var(--tile-pad) calc(var(--tile-pad) * 3);
+}
+
+.intro {
+  display: grid;
+  gap: var(--grid-gap);
+  max-width: 880px;
+  padding-block: var(--tile-pad);
+}
+
+.intro .lead {
+  color: var(--text-muted);
+}
+
+.section {
+  display: grid;
+  gap: calc(var(--grid-gap) * 1.5);
+  padding-block: calc(var(--tile-pad) * 1.5);
+  border-top: 1px solid var(--line);
+}
+
+.subheading {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+/* Colours */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--grid-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  display: grid;
+  grid-template-rows: 88px auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-button);
+  background: var(--surface);
+}
+
+.chip {
+  border-bottom: 1px solid var(--line);
+}
+
+.swatchText {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px 14px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.swatchText code {
+  font-family: var(--font-mono);
+  color: var(--muted);
+}
+
+.usage {
+  color: var(--muted);
+}
+
+.bgGrids {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--grid-gap);
+}
+
+.bgGrid {
+  display: grid;
+  align-content: end;
+  gap: 4px;
+  min-height: 192px;
+  padding: var(--tile-pad);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+  background-size: var(--grid-step) var(--grid-step);
+  color: var(--text);
+}
+
+.bgGrid[data-surface='dark'] {
+  border-color: var(--ink);
+  background-color: var(--ink);
+}
+
+.bgGrid[data-surface='blue'] {
+  border-color: var(--blue-600);
+  background-color: var(--blue-600);
+}
+
+.bgGrid :global(.mono-label) {
+  color: var(--text-muted);
+}
+
+/* Typography */
+
+.typeList {
+  display: grid;
+  gap: calc(var(--grid-gap) * 2);
+}
+
+.typeRow {
+  display: grid;
+  gap: 8px;
+}
+
+.typeMeta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 12px;
+  color: var(--blue-700);
+}
+
+.typeMeta code {
+  font-family: inherit;
+}
+
+.weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  font-size: var(--fs-lead);
+}
+
+/* Grid */
+
+.columns {
+  min-height: 120px;
+}
+
+.column {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-field);
+  background: var(--icon-bg);
+  border: 1px dashed var(--blue-300);
+  color: var(--blue-700);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+}
+
+/* Only as many columns as the current breakpoint provides */
+@media (max-width: 1199px) {
+  .column:nth-child(n + 7) {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .column:nth-child(n + 2) {
+    display: none;
+  }
+}
+
+.tile {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: var(--tile-pad);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.tile:hover {
+  transform: translateY(var(--hover-lift));
+  box-shadow: var(--shadow-card-hover);
+}
+
+.tile :global(.mono-label) {
+  color: var(--blue-700);
+}
+
+/* Controls */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--grid-gap);
+}
+
+.button,
+.buttonInverse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap-min);
+  height: var(--button-height);
+  padding: 0 28px;
+  border: 0;
+  border-radius: var(--radius-button);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.button {
+  background: var(--blue-600);
+  color: var(--white);
+  box-shadow: var(--shadow-button);
+}
+
+.buttonInverse {
+  background: var(--white);
+  color: var(--blue-700);
+}
+
+.button:hover,
+.buttonInverse:hover {
+  transform: translateY(-1px);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--blue-700);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Focus demo */
+
+.focusSurfaces {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--grid-gap);
+}
+
+.focusPanel {
+  display: grid;
+  gap: var(--grid-gap);
+  padding: var(--tile-pad);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.focusPanel[data-surface='dark'] {
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.focusPanel[data-surface='blue'] {
+  border-color: var(--blue-600);
+  background: var(--blue-600);
+}
+
+.focusLabel {
+  display: grid;
+  gap: 4px;
+}
+
+.focusLabel :global(.mono-label) {
+  color: var(--text-muted);
+}
+
+.focusSample {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  cursor: default;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  color: var(--text-accent);
+  font-weight: 500;
+}

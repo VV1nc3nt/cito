@@ -1,20 +1,22 @@
-import { test, expect, Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test.describe('Frontend', () => {
-  let page: Page
-
-  test.beforeAll(async ({ browser }, testInfo) => {
-    const context = await browser.newContext()
-    page = await context.newPage()
-  })
-
-  test('can go on homepage', async ({ page }) => {
+  test('home page renders the stub heading', async ({ page }) => {
     await page.goto('http://localhost:3000')
 
-    await expect(page).toHaveTitle(/Payload Blank Template/)
+    await expect(page).toHaveTitle(/ЦИТО/)
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ru')
+    await expect(page.locator('main#main h1')).toHaveText(
+      'Цифровая инфраструктура для образования и науки',
+    )
+  })
 
-    const heading = page.locator('h1').first()
+  test('skip link is the first tab stop and targets main', async ({ page }) => {
+    await page.goto('http://localhost:3000')
 
-    await expect(heading).toHaveText('Welcome to your new project.')
+    await page.keyboard.press('Tab')
+    const focused = page.locator(':focus')
+    await expect(focused).toHaveText('Перейти к содержимому')
+    await expect(focused).toHaveAttribute('href', '#main')
   })
 })

@@ -1,0 +1,22 @@
+.skipLink {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0 20px;
+  border-radius: var(--radius-button);
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  /* Visually hidden until focused */
+  transform: translateY(calc(-100% - 16px));
+}
+
+.skipLink:focus-visible {
+  transform: none;
+}

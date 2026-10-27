@@ -1,18 +1,27 @@
+import type { Metadata } from 'next'
 import React from 'react'
-import './styles.css'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+import '@/styles/tokens.css'
+import '@/styles/base.css'
+
+import { SkipLink } from '@/components/SkipLink'
+
+import { jetbrainsMono, onest } from './fonts'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  title: 'ЦИТО',
+  description: 'ФГБУ «Центр информационно-технического обеспечения»',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ru" className={`${onest.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <main>{children}</main>
+        <SkipLink />
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
       </body>
     </html>
   )
