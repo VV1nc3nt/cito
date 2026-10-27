@@ -1,0 +1,21 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.item {
+  grid-column: span var(--span, 12);
+}
+
+@media (max-width: 1199px) {
+  .item {
+    grid-column: span var(--span-tablet, 6);
+  }
+}
+
+@media (max-width: 767px) {
+  .item {
+    grid-column: 1 / -1;
+  }
+}

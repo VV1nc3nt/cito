@@ -10,4 +10,13 @@ test.describe('Frontend', () => {
       'Цифровая инфраструктура для образования и науки',
     )
   })
+
+  test('skip link is the first tab stop and targets main', async ({ page }) => {
+    await page.goto('http://localhost:3000')
+
+    await page.keyboard.press('Tab')
+    const focused = page.locator(':focus')
+    await expect(focused).toHaveText('Перейти к содержимому')
+    await expect(focused).toHaveAttribute('href', '#main')
+  })
 })
