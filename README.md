@@ -1,67 +1,100 @@
-# Payload Blank Template
+# Сайт ФГБУ ЦИТО
 
-This template comes configured with the bare minimum to get started on anything you need.
+Сайт [digitalobr.ru](https://digitalobr.ru): Next.js (App Router) + Payload CMS 3 + PostgreSQL в одном приложении.
 
-## Quick start
+## Требования
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+- Node.js `^22.23.4` или `>=24.22.1`
+- pnpm 12 (версия закреплена в `packageManager`, удобно через `corepack enable`)
+- Docker с Compose v2
 
-## Quick Start - local setup
+## Локальная разработка
 
-To spin up this template locally, follow these steps:
+```sh
+cp .env.example .env          # заменить плейсхолдеры, PAYLOAD_SECRET — `openssl rand -hex 32`
+docker compose up -d postgres # только база, порт 127.0.0.1:5432
+pnpm install
+pnpm dev                      # http://localhost:3000
+```
 
-### Clone
+Если порт 5432 занят, задайте `POSTGRES_PORT` в `.env` и поправьте порт в `DATABASE_URL`.
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+В dev-режиме Payload синхронизирует схему БД сам (push), миграции не нужны.
 
-### Development
+## Запуск через Docker Compose
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+```sh
+cp .env.example .env   # заменить плейсхолдеры
+docker compose up -d --build
+```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+Поднимаются `postgres` (17) и `app`. `app` стартует после того, как postgres пройдёт healthcheck,
+применяет миграции и слушает `127.0.0.1:3000` (порт меняется через `APP_PORT`). Снаружи сайт
+отдаётся через nginx. Внутри compose `DATABASE_URL` указывает на сервис `postgres`
+автоматически. Пароль БД подставляется в URL как есть — используйте символы, допустимые в URL,
+или экранируйте их.
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+Данные хранятся в именованных томах: `pgdata` (база) и `media` (загруженные файлы).
+`docker compose down` их не удаляет, `docker compose down -v` — удаляет.
 
-#### Docker (Optional)
+## Первый администратор
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+Откройте `/admin`: на пустой базе Payload покажет форму создания первого пользователя.
+Он автоматически получает роль «Администратор». Остальных пользователей создаёт администратор
+в разделе «Пользователи».
 
-To do so, follow these steps:
+Роли:
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+- **Администратор** — полный доступ, управляет пользователями.
+- **Редактор** — работает с контентом и медиа; раздел «Пользователи» ему не виден и недоступен.
 
-## How it works
+## Миграции
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+- В dev схема обновляется push-режимом.
+- После изменения коллекций создайте миграцию (нужна запущенная БД):
 
-### Collections
+  ```sh
+  pnpm payload migrate:create <name>
+  ```
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+  Файлы появятся в `src/migrations/` — их нужно закоммитить.
 
-- #### Users (Authentication)
+- В production миграции применяются автоматически при старте сервера
+  (`prodMigrations` + `src/instrumentation.ts`). Если инициализация или миграция падает,
+  процесс завершается с ненулевым кодом.
 
-  Users are auth-enabled collections that have access to the admin panel.
+## Медиа
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+Коллекция `media`: JPG, PNG, WebP и PDF до 20 МБ. Для изображений обязателен альтернативный текст.
+Файлы лежат на диске: локально в `./media`, в контейнере — `/app/media` (том `media`).
+Каталог задаётся переменной `MEDIA_DIR`. При отдаче через nginx не забудьте `client_max_body_size`
+не меньше 20 МБ.
 
-- #### Media
+## Дизайн-токены, шрифты, стили
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+- `src/styles/tokens.css` — все токены (цвета, радиусы, тени, сетка, размеры шрифтов по брейкпоинтам).
+  Единственный источник значений для компонентов.
+- `src/styles/base.css` — базовые стили, типографика, фокус, reduced-motion, утилиты (`.nowrap` и др.).
+- `src/components/layout/` — `Container` и `Grid`.
+- `src/fonts/` — Onest и JetBrains Mono (woff2, self-host, OFL); источники и пересборка — в
+  `src/fonts/README.md`. Подключение — `src/app/(frontend)/fonts.ts`.
+- `/dev/tokens` — демо-страница токенов (только в dev, в production — 404).
 
-### Docker
+Брейкпоинты: десктоп ≥1200px, планшет 768–1199px, мобильный <768px.
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+## Скрипты
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+| Команда                     | Что делает                             |
+| --------------------------- | -------------------------------------- |
+| `pnpm dev`                  | dev-сервер                             |
+| `pnpm build` / `pnpm start` | production-сборка и запуск             |
+| `pnpm lint`                 | ESLint                                 |
+| `pnpm typecheck`            | `tsc --noEmit`                         |
+| `pnpm generate:types`       | типы Payload в `src/payload-types.ts`  |
+| `pnpm generate:importmap`   | import map админки                     |
+| `pnpm test:e2e`             | Playwright (нужен запущенный postgres) |
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+## CI
 
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+GitHub Actions (`.github/workflows/ci.yml`) на каждый push и pull request: установка
+зависимостей, `lint`, `typecheck`, `build` с фиктивными переменными окружения.
