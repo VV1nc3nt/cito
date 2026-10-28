@@ -1,0 +1,285 @@
+/* «Меню» and «Закрыть» buttons */
+
+.menuButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap-min);
+  padding: 4px 14px 4px 12px;
+  border: var(--btn-border-width) solid var(--btn-ghost-border);
+  border-radius: var(--radius-button);
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-fg);
+  font-size: var(--fs-button);
+  font-weight: 500;
+  line-height: var(--lh-ui);
+  white-space: var(--ui-nowrap);
+  cursor: pointer;
+}
+
+.menuButton:hover {
+  background: var(--btn-ghost-bg-hover);
+}
+
+.burger {
+  position: relative;
+  flex-shrink: 0;
+  width: 18px;
+  height: 12px;
+}
+
+.bar {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.bar:nth-child(1) {
+  top: 0;
+}
+
+.bar:nth-child(2) {
+  top: 5px;
+}
+
+.bar:nth-child(3) {
+  top: 10px;
+}
+
+/* The burger of «Закрыть» is drawn as a cross; with motion it turns from bars into the cross. */
+.cross .bar:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.cross .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.cross .bar:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.menu[data-animate] .cross .bar {
+  transition:
+    transform 0.3s cubic-bezier(0.65, 0, 0.35, 1) 0.15s,
+    opacity 0.2s ease 0.15s;
+}
+
+@starting-style {
+  .menu[data-animate][open] .cross .bar {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Dialog */
+
+.menu {
+  background-color: var(--menu-bg);
+  background-image: var(--surface-grid);
+  background-size: var(--grid-step) var(--grid-step);
+}
+
+/* The scrollbar gutter, if any, matches the menu. */
+:root:has(.menu[open]) {
+  background-color: var(--menu-bg);
+}
+
+.orbits {
+  position: fixed;
+  right: -160px;
+  bottom: -160px;
+  width: 440px;
+  height: 440px;
+  fill: none;
+  stroke-width: 8;
+  pointer-events: none;
+}
+
+.top {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px var(--container-pad);
+  border-bottom: 1px solid var(--header-border);
+}
+
+.name {
+  font-size: var(--fs-logo);
+  font-weight: 700;
+  letter-spacing: var(--ls-logo);
+  line-height: var(--lh-ui);
+}
+
+.top .menuButton {
+  margin-left: auto;
+}
+
+.body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px var(--container-pad) 32px;
+}
+
+/* Navigation */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 58px;
+  padding-block: 8px;
+  border-bottom: 1px solid var(--menu-divider);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.item:hover {
+  color: var(--menu-link-hover);
+}
+
+.itemIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--menu-icon-border);
+  border-radius: var(--radius-icon);
+  background: var(--menu-icon-bg);
+  color: var(--menu-icon-fg);
+}
+
+.itemLabel {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-menu-item);
+  font-weight: 600;
+  letter-spacing: var(--ls-menu-item);
+  line-height: var(--lh-ui);
+  white-space: var(--ui-nowrap);
+}
+
+.item[aria-current='page'] .itemLabel {
+  text-decoration: underline 2px var(--nav-current-bar);
+  text-underline-offset: 6px;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: var(--menu-chevron);
+}
+
+/* Appeal and direct contacts */
+
+.appeal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--button-height);
+  padding: 8px 16px;
+  border: var(--btn-border-width) solid var(--btn-primary-border);
+  border-radius: var(--radius-button);
+  background: var(--btn-primary-bg);
+  box-shadow: var(--btn-primary-shadow);
+  color: var(--btn-primary-fg);
+  font-size: var(--fs-menu-button);
+  font-weight: 600;
+  line-height: var(--lh-ui);
+  text-align: center;
+  text-decoration: none;
+  white-space: var(--ui-nowrap);
+}
+
+.appeal:hover {
+  filter: var(--btn-primary-hover-filter);
+}
+
+.direct {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.directLabel {
+  color: var(--text-accent);
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 10px 16px;
+  border: 1px solid var(--contact-tile-border);
+  border-radius: var(--radius-button);
+  background: var(--contact-tile-bg);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.tile:hover {
+  border-color: var(--contact-tile-border-hover);
+}
+
+.tileIcon {
+  flex-shrink: 0;
+  color: var(--contact-tile-icon);
+}
+
+.tileText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  line-height: var(--lh-ui);
+}
+
+.tileLabel {
+  font-size: var(--fs-contact-label);
+  color: var(--contact-tile-label);
+}
+
+.tileValue {
+  font-size: var(--fs-contact-value);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+/* Opening animation: items come in one after another, 40ms apart. */
+
+.menu[data-animate] .stagger {
+  animation: menu-item-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(0.12s + var(--i) * 40ms);
+}
+
+.menu[data-animate] .orbits {
+  animation: menu-orbits-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+}
+
+@keyframes menu-orbits-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-8deg);
+  }
+}

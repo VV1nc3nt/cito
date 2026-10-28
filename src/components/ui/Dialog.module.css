@@ -1,0 +1,50 @@
+/* Reset the browser defaults of <dialog>; the display value stays with the browser. */
+.dialog {
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.dialog::backdrop {
+  background: var(--dialog-backdrop);
+}
+
+.fullscreen {
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+}
+
+.centered {
+  width: min(640px, 100% - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  border: var(--btn-border-width) solid var(--dialog-border);
+  border-radius: var(--dialog-radius);
+  background: var(--dialog-bg);
+  box-shadow: var(--dialog-shadow);
+}
+
+@media (max-width: 767px) {
+  .centered {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+  }
+}
+
+/*
+ * No page scrolling under an open dialog. The gutter keeps the width when a classic
+ * scrollbar disappears; it is reserved only while a dialog is open, so short pages do not
+ * get an empty strip next to the dark header.
+ */
+:root:has(.dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}

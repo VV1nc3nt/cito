@@ -5,6 +5,7 @@ import { appealHref } from '@/config/navigation'
 
 import { LogoMark } from './LogoMark'
 import { MainNav } from './MainNav'
+import { MobileMenu } from './MobileMenu'
 import styles from './Header.module.css'
 
 /** Site header of the public pages. Not sticky. */
@@ -27,6 +28,7 @@ export function Header() {
             <Link href={appealHref} className={`${styles.appeal} ${styles.wideOnly}`}>
               Обращение
             </Link>
+            <MobileMenu buttonClassName={styles.mobileOnly} />
           </div>
         </div>
 
