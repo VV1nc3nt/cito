@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 
 import { Container } from '@/components/layout/Container'
 import { Grid, GridItem } from '@/components/layout/Grid'
+import { Image } from '@/components/ui/Image'
 
 import { CssVar } from './CssVar'
 import styles from './page.module.css'
@@ -113,7 +114,7 @@ export default function TokensPage() {
                 <span className="nowrap">
                   сейчас <CssVar name={token} />
                 </span>{' '}
-                <span className="nowrap">{spec}</span>
+                <span>{spec}</span>
               </p>
               <p className={className}>Цифровая инфраструктура для образования и науки</p>
             </div>
@@ -203,6 +204,51 @@ export default function TokensPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="low-vision">
+        <h2 id="low-vision">Версия для слабовидящих</h2>
+        <div className={styles.lvSample}>
+          <p className="lead">
+            Включите режим кнопкой в шапке и проверьте на этом блоке размер шрифта, цветовые схемы,
+            интервалы и отключение изображений.
+          </p>
+          <p className="text">
+            Центр создан для информационно-технического обеспечения развития и совершенствования
+            исследований и разработок в области образования и науки.{' '}
+            <a href="#low-vision" className={styles.link}>
+              Ссылка в тексте
+            </a>
+          </p>
+          <div className={styles.controls}>
+            <button type="button" className={styles.button}>
+              Оставить обращение
+            </button>
+            <span className={styles.badge}>Онлайн · 24/7</span>
+          </div>
+          <div className={styles.lvImages}>
+            <figure className={styles.lvFigure}>
+              <Image
+                src="/images/logo-cito.png"
+                alt="Логотип ФГБУ ЦИТО"
+                width={120}
+                height={120}
+                className={styles.lvImage}
+              />
+              <figcaption>Содержательное: при «Изображения: выкл» — рамка с alt</figcaption>
+            </figure>
+            <figure className={styles.lvFigure}>
+              <Image
+                src="/images/logo-cito.png"
+                alt=""
+                width={120}
+                height={120}
+                className={styles.lvImage}
+              />
+              <figcaption>Декоративное (alt=&quot;&quot;): при «выкл» скрыто</figcaption>
+            </figure>
+          </div>
         </div>
       </section>
     </Container>

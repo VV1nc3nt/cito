@@ -1,0 +1,133 @@
+.body {
+  display: grid;
+  gap: 20px;
+  padding: var(--tile-pad);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+}
+
+.group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: var(--tap-min);
+  padding: 6px 14px;
+  border: var(--btn-border-width) solid var(--option-border);
+  border-radius: var(--radius-button);
+  line-height: var(--lh-ui);
+  white-space: var(--ui-nowrap);
+  cursor: pointer;
+}
+
+.optionText {
+  min-width: 0;
+}
+
+/* Checked: the radio dot, a bolder label and the border; not colour alone. */
+.option:has(:checked) {
+  border-color: var(--option-border-checked);
+  background: var(--option-bg-checked);
+  font-weight: 600;
+}
+
+.radio {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--option-border-checked);
+}
+
+.sample {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.6em;
+  padding: 2px 8px;
+  border: 1px solid var(--option-border);
+  border-radius: var(--radius-field);
+  font-weight: 700;
+}
+
+.sample[data-scheme='bw'] {
+  color: var(--lv-sample-bw-fg);
+  background: var(--lv-sample-bw-bg);
+}
+
+.sample[data-scheme='wb'] {
+  color: var(--lv-sample-wb-fg);
+  background: var(--lv-sample-wb-bg);
+}
+
+.sample[data-scheme='blue'] {
+  color: var(--lv-sample-blue-fg);
+  background: var(--lv-sample-blue-bg);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--tap-min);
+  padding: 6px 16px;
+  border: var(--btn-border-width) solid var(--btn-secondary-border);
+  border-radius: var(--radius-button);
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-fg);
+  font-size: var(--fs-button);
+  font-weight: 500;
+  line-height: var(--lh-ui);
+  text-align: center;
+  white-space: var(--ui-nowrap);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--btn-secondary-bg-hover);
+}
+
+.icon {
+  flex-shrink: 0;
+}

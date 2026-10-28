@@ -19,6 +19,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
   overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
@@ -37,6 +38,9 @@ select,
 textarea {
   font: inherit;
   color: inherit;
+  /* Browsers reset spacing on form controls; keep the page (and low-vision) values. */
+  letter-spacing: inherit;
+  word-spacing: inherit;
 }
 
 a {

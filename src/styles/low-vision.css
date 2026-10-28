@@ -1,0 +1,217 @@
+/*
+ * Low-vision mode (ГОСТ Р 52872-2019; WCAG 1.4.4, 1.4.12): overrides of the design tokens.
+ * The attributes on <html> are set before the first paint by the inline script and then by
+ * the settings dialog (src/lib/low-vision). Without data-lv nothing here applies.
+ *
+ *   data-lv-size    1 | 2 | 3       root font size 100% / 150% / 200%
+ *   data-lv-scheme  bw | wb | blue  black on white, white on black, dark blue on light blue
+ *   data-lv-letter  1 | 2 | 3       letter spacing: design / 0.06em / 0.12em
+ *   data-lv-line    1 | 2 | 3       line height: design / 1.8 / 2.0
+ *   data-lv-images  on | off        see components/ui/Image
+ *
+ * In the mode every surface takes the scheme colours: text, borders, focus ring and accents
+ * are the text colour (≥7:1), backgrounds are the scheme background; grids, gradients,
+ * shadows, translucency, decorations and motion are removed.
+ */
+
+/* Scheme samples for the settings dialog; constant, not affected by the mode. */
+:root {
+  --lv-sample-bw-fg: #000000;
+  --lv-sample-bw-bg: #ffffff;
+  --lv-sample-wb-fg: #ffffff;
+  --lv-sample-wb-bg: #000000;
+  --lv-sample-blue-fg: #063462;
+  --lv-sample-blue-bg: #9dd1ff;
+}
+
+:root[data-lv-scheme='bw'] {
+  --lv-fg: var(--lv-sample-bw-fg);
+  --lv-bg: var(--lv-sample-bw-bg);
+}
+
+:root[data-lv-scheme='wb'] {
+  --lv-fg: var(--lv-sample-wb-fg);
+  --lv-bg: var(--lv-sample-wb-bg);
+}
+
+:root[data-lv-scheme='blue'] {
+  --lv-fg: var(--lv-sample-blue-fg);
+  --lv-bg: var(--lv-sample-blue-bg);
+}
+
+/* Contextual tokens are redeclared by [data-surface], so they are overridden there too. */
+:root[data-lv],
+:root[data-lv] [data-surface] {
+  --text: var(--lv-fg);
+  --text-muted: var(--lv-fg);
+  --text-accent: var(--lv-fg);
+  --focus-ring: var(--lv-fg);
+  --surface-bg: var(--lv-bg);
+  --surface-grid: none;
+}
+
+:root[data-lv] {
+  --focus-ring-width: 3px;
+
+  /* Palette roles */
+  --bg: var(--lv-bg);
+  --surface: var(--lv-bg);
+  --line: var(--lv-fg);
+  --line-2: var(--lv-fg);
+  --line-2-strong: var(--lv-fg);
+  --icon-bg: var(--lv-bg);
+  --muted: var(--lv-fg);
+  --muted-dark: var(--lv-fg);
+  --muted-dark-2: var(--lv-fg);
+  --muted-dark-3: var(--lv-fg);
+  --grid-line-dark: transparent;
+  --grid-line-blue: transparent;
+  --grid-line-light: transparent;
+
+  /* Shadows and motion */
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-button: none;
+  --hover-lift: 0px;
+
+  /* Buttons: a border in the text colour, not told apart by the background alone */
+  --btn-border-width: 2px;
+  --btn-primary-bg: var(--lv-bg);
+  --btn-primary-fg: var(--lv-fg);
+  --btn-primary-border: var(--lv-fg);
+  --btn-primary-shadow: none;
+  --btn-primary-hover-filter: none;
+  --btn-ghost-bg: var(--lv-bg);
+  --btn-ghost-bg-hover: var(--lv-bg);
+  --btn-ghost-border: var(--lv-fg);
+  --btn-ghost-fg: var(--lv-fg);
+  --btn-secondary-bg: var(--lv-bg);
+  --btn-secondary-bg-hover: var(--lv-bg);
+  --btn-secondary-border: var(--lv-fg);
+  --btn-secondary-fg: var(--lv-fg);
+  --btn-inverse-bg: var(--lv-bg);
+  --btn-inverse-fg: var(--lv-fg);
+
+  /* Skip link */
+  --skip-link-bg: var(--lv-bg);
+  --skip-link-fg: var(--lv-fg);
+  --skip-link-border: var(--lv-fg);
+
+  /* Header. The logo keeps its white plate: the logo colours need it. */
+  --header-border: var(--lv-fg);
+  --logo-plate-bg: #ffffff;
+  --logo-plate-border: var(--lv-fg);
+  --logo-plate-shadow: none;
+  --nav-link: var(--lv-fg);
+  --nav-link-hover: var(--lv-fg);
+  --nav-current: var(--lv-fg);
+  --nav-current-bar: var(--lv-fg);
+
+  /* Mobile menu */
+  --menu-bg: var(--lv-bg);
+  --menu-divider: var(--lv-fg);
+  --menu-icon-bg: var(--lv-bg);
+  --menu-icon-border: var(--lv-fg);
+  --menu-icon-fg: var(--lv-fg);
+  --menu-chevron: var(--lv-fg);
+  --menu-link-hover: var(--lv-fg);
+  --contact-tile-bg: var(--lv-bg);
+  --contact-tile-border: var(--lv-fg);
+  --contact-tile-border-hover: var(--lv-fg);
+  --contact-tile-label: var(--lv-fg);
+  --contact-tile-icon: var(--lv-fg);
+  --orbit-red: var(--lv-fg);
+  --orbit-blue: var(--lv-fg);
+  --orbit-grey: var(--lv-fg);
+
+  /* Dialogs */
+  --dialog-bg: var(--lv-bg);
+  --dialog-border: var(--lv-fg);
+  --dialog-shadow: none;
+  --dialog-backdrop: var(--lv-bg);
+  --option-border: var(--lv-fg);
+  --option-border-checked: var(--lv-fg);
+  --option-bg-checked: var(--lv-bg);
+
+  accent-color: var(--lv-fg);
+}
+
+/* Font size. At 150% and 200% buttons and menu items may wrap instead of overflowing. */
+
+:root[data-lv-size='2'] {
+  font-size: 150%;
+  --ui-nowrap: normal;
+}
+
+:root[data-lv-size='3'] {
+  font-size: 200%;
+  --ui-nowrap: normal;
+}
+
+/* Long words in large headings are hyphenated; other text breaks with overflow-wrap only. */
+
+:root:is([data-lv-size='2'], [data-lv-size='3']) :is(h1, h2, h3, .h1, .h2, .h2-about) {
+  hyphens: auto;
+}
+
+/* Letter spacing (also replaces the negative spacing of headings) */
+
+:root[data-lv-letter='2'] {
+  --ls-body: 0.06em;
+  --ls-h1: 0.06em;
+  --ls-h2: 0.06em;
+  --ls-mono: 0.06em;
+  --ls-logo: 0.06em;
+  --ls-menu-item: 0.06em;
+}
+
+:root[data-lv-letter='3'] {
+  --ls-body: 0.12em;
+  --ls-h1: 0.12em;
+  --ls-h2: 0.12em;
+  --ls-mono: 0.12em;
+  --ls-logo: 0.12em;
+  --ls-menu-item: 0.12em;
+}
+
+/* Line height */
+
+:root[data-lv-line='2'] {
+  --lh-body: 1.8;
+  --lh-lead: 1.8;
+  --lh-h1: 1.8;
+  --lh-h2: 1.8;
+  --lh-ui: 1.8;
+}
+
+:root[data-lv-line='3'] {
+  --lh-body: 2;
+  --lh-lead: 2;
+  --lh-h1: 2;
+  --lh-h2: 2;
+  --lh-ui: 2;
+}
+
+/*
+ * Links are underlined, except those drawn as a button, a tile or the logo (data-plain):
+ * their border already marks them. Decorations and all motion are off.
+ */
+
+:root[data-lv] a:not([data-plain]) {
+  text-decoration-line: underline;
+}
+
+:root[data-lv] a:not([data-plain]):hover {
+  text-decoration-thickness: 3px;
+}
+
+:root[data-lv] [data-decor] {
+  display: none;
+}
+
+:root[data-lv] *,
+:root[data-lv] *::before,
+:root[data-lv] *::after {
+  animation: none !important;
+  transition: none !important;
+}

@@ -1,0 +1,22 @@
+/* Shown only when the low-vision mode turns images off. */
+.fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, var(--image-width, 100%));
+  /* At least the image height; grows with a long alt at large text sizes. */
+  min-height: var(--image-height, var(--tap-min));
+  padding: 12px;
+  border: var(--btn-border-width) solid var(--text);
+  color: var(--text);
+  text-align: center;
+}
+
+:root[data-lv-images='off'] .content,
+:root[data-lv-images='off'] .decorative {
+  display: none;
+}
+
+:root[data-lv-images='off'] .fallback {
+  display: flex;
+}

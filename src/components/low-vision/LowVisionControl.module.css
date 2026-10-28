@@ -1,0 +1,36 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: var(--tap-min);
+  min-height: var(--tap-min);
+  padding: 4px 14px;
+  border: var(--btn-border-width) solid var(--btn-ghost-border);
+  border-radius: var(--radius-button);
+  background: var(--btn-ghost-bg);
+  color: var(--btn-ghost-fg);
+  font-size: var(--fs-button-sm);
+  line-height: var(--lh-ui);
+  white-space: var(--ui-nowrap);
+  cursor: pointer;
+}
+
+.button:hover {
+  background: var(--btn-ghost-bg-hover);
+}
+
+.iconOnly {
+  padding: 0;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+/* The label follows the mode; without JavaScript the button is not offered at all. */
+:root[data-lv] .labelOff,
+:root:not([data-lv]) .labelOn,
+:root:not([data-js]) .button {
+  display: none;
+}

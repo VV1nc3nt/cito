@@ -36,4 +36,6 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
+      # Specs without a database; e2e runs locally.
+      - run: pnpm test:unit
       - run: pnpm build

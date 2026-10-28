@@ -1,0 +1,61 @@
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: var(--fs-nav);
+  line-height: var(--lh-ui);
+}
+
+.inline {
+  flex: 1 1 auto;
+  column-gap: 28px;
+  row-gap: 4px;
+}
+
+.row {
+  flex-basis: 100%;
+  justify-content: space-between;
+  column-gap: 16px;
+  row-gap: 4px;
+  padding-block: 4px;
+  border-top: 1px solid var(--header-border);
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding-block: 10px;
+  color: var(--nav-link);
+  text-decoration: none;
+  white-space: var(--ui-nowrap);
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--nav-link-hover);
+}
+
+/* Current section: white text and a 2px bar under it, not colour alone (WCAG 1.4.1). */
+.link[aria-current='page'] {
+  color: var(--nav-current);
+}
+
+.link[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  left: 0;
+  height: 2px;
+  background: var(--nav-current-bar);
+}
+
+/* Mobile without JavaScript: the row wraps, so align it to the start instead of spreading. */
+@media (max-width: 767px) {
+  .row {
+    justify-content: flex-start;
+    column-gap: 24px;
+  }
+}
