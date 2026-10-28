@@ -194,6 +194,7 @@ export function MobileMenu({ buttonClassName }: { buttonClassName?: string }) {
           <Link
             href={appealHref}
             className={`${styles.appeal} ${styles.stagger}`}
+            data-plain
             style={stagger(mainNav.length)}
             onClick={onLinkClick}
           >
@@ -202,7 +203,7 @@ export function MobileMenu({ buttonClassName }: { buttonClassName?: string }) {
 
           <div className={`${styles.direct} ${styles.stagger}`} style={stagger(mainNav.length + 1)}>
             <p className={`mono-label ${styles.directLabel}`}>Связаться напрямую</p>
-            <a href={contacts.phone.href} className={styles.tile} onClick={onLinkClick}>
+            <a href={contacts.phone.href} className={styles.tile} onClick={onLinkClick} data-plain>
               <PhoneIcon size={20} className={styles.tileIcon} />
               <span className={styles.tileText}>
                 <span className={styles.tileLabel}>Позвонить</span>
@@ -212,7 +213,7 @@ export function MobileMenu({ buttonClassName }: { buttonClassName?: string }) {
                 </span>
               </span>
             </a>
-            <a href={contacts.email.href} className={styles.tile} onClick={onLinkClick}>
+            <a href={contacts.email.href} className={styles.tile} onClick={onLinkClick} data-plain>
               <MailIcon size={20} className={styles.tileIcon} />
               <span className={styles.tileText}>
                 <span className={styles.tileLabel}>Написать письмо</span>

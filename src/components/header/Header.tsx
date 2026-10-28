@@ -15,7 +15,7 @@ export function Header() {
     <header className={styles.header} data-surface="dark">
       <Container className={styles.inner}>
         <div className={styles.bar}>
-          <Link href="/" className={styles.logo} aria-label="ЦИТО — на главную">
+          <Link href="/" className={styles.logo} aria-label="ЦИТО — на главную" data-plain>
             <LogoMark />
             <span className={styles.logoText}>
               <span className={styles.logoName}>ЦИТО</span>
@@ -27,7 +27,7 @@ export function Header() {
 
           <div className={styles.actions}>
             <LowVisionControl wideClassName={styles.wideOnly} mobileClassName={styles.mobileOnly} />
-            <Link href={appealHref} className={`${styles.appeal} ${styles.wideOnly}`}>
+            <Link href={appealHref} className={`${styles.appeal} ${styles.wideOnly}`} data-plain>
               Обращение
             </Link>
             <MobileMenu buttonClassName={styles.mobileOnly} />

@@ -134,7 +134,6 @@
   --option-bg-checked: var(--lv-bg);
 
   accent-color: var(--lv-fg);
-  hyphens: auto;
 }
 
 /* Font size. At 150% and 200% buttons and menu items may wrap instead of overflowing. */
@@ -147,6 +146,12 @@
 :root[data-lv-size='3'] {
   font-size: 200%;
   --ui-nowrap: normal;
+}
+
+/* Long words in large headings are hyphenated; other text breaks with overflow-wrap only. */
+
+:root:is([data-lv-size='2'], [data-lv-size='3']) :is(h1, h2, h3, .h1, .h2, .h2-about) {
+  hyphens: auto;
 }
 
 /* Letter spacing (also replaces the negative spacing of headings) */
@@ -187,13 +192,16 @@
   --lh-ui: 2;
 }
 
-/* Links are underlined; decorations and all motion are off. */
+/*
+ * Links are underlined, except those drawn as a button, a tile or the logo (data-plain):
+ * their border already marks them. Decorations and all motion are off.
+ */
 
-:root[data-lv] a {
+:root[data-lv] a:not([data-plain]) {
   text-decoration-line: underline;
 }
 
-:root[data-lv] a:hover {
+:root[data-lv] a:not([data-plain]):hover {
   text-decoration-thickness: 3px;
 }
 
