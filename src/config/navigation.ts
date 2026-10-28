@@ -31,7 +31,12 @@ export const mainNav: readonly NavItem[] = [
 export const appealHref = '/#contacts'
 
 export const contacts = {
-  phone: { label: '+7 (495) 009-02-29', href: 'tel:+74950090229' },
+  // Two groups that never break inside; at large text sizes the line may break between them.
+  phone: {
+    label: '+7 (495) 009-02-29',
+    groups: ['+7 (495)', '009-02-29'],
+    href: 'tel:+74950090229',
+  },
   email: { label: 'info@digitalobr.ru', href: 'mailto:info@digitalobr.ru' },
 } as const
 

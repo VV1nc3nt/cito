@@ -206,7 +206,10 @@ export function MobileMenu({ buttonClassName }: { buttonClassName?: string }) {
               <PhoneIcon size={20} className={styles.tileIcon} />
               <span className={styles.tileText}>
                 <span className={styles.tileLabel}>Позвонить</span>
-                <span className={`${styles.tileValue} nowrap`}>{contacts.phone.label}</span>
+                <span className={styles.tileValue}>
+                  <span className="nowrap">{contacts.phone.groups[0]}</span>{' '}
+                  <span className="nowrap">{contacts.phone.groups[1]}</span>
+                </span>
               </span>
             </a>
             <a href={contacts.email.href} className={styles.tile} onClick={onLinkClick}>

@@ -11,6 +11,9 @@
  *   mobile   <768px    — @media (max-width: 767px)
  */
 
+/* Low-vision mode: overrides of the tokens below (higher specificity, so the order is free). */
+@import './low-vision.css';
+
 :root {
   /* Colours */
   --ink: #0a1030;
