@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Container } from '@/components/layout/Container'
+import { LowVisionControl } from '@/components/low-vision/LowVisionControl'
 import { appealHref } from '@/config/navigation'
 
 import { LogoMark } from './LogoMark'
@@ -25,6 +26,7 @@ export function Header() {
           <MainNav variant="inline" className={styles.desktopNav} />
 
           <div className={styles.actions}>
+            <LowVisionControl wideClassName={styles.wideOnly} mobileClassName={styles.mobileOnly} />
             <Link href={appealHref} className={`${styles.appeal} ${styles.wideOnly}`}>
               Обращение
             </Link>

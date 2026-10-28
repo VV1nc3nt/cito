@@ -7,6 +7,7 @@ import '@/styles/base.css'
 import { Header } from '@/components/header/Header'
 import { InlineScript } from '@/components/InlineScript'
 import { SkipLink } from '@/components/SkipLink'
+import { buildInlineScript } from '@/lib/low-vision/settings'
 
 import { jetbrainsMono, onest } from './fonts'
 
@@ -24,8 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        {/* Marks that JavaScript runs; CSS shows the no-JS navigation without it. */}
-        <InlineScript html="document.documentElement.setAttribute('data-js','')" />
+        {/* Before the first paint: data-js and the low-vision settings on <html>. */}
+        <InlineScript html={buildInlineScript()} />
       </head>
       <body>
         <SkipLink />

@@ -2,9 +2,9 @@
 
 import { useSyncExternalStore } from 'react'
 
+import { ON_ATTR as LOW_VISION_ATTR } from './low-vision/settings'
+
 const REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
-// Set on <html> while the low-vision mode is on.
-const LOW_VISION_ATTR = 'data-lv'
 
 /** Motion is allowed unless the user prefers reduced motion or the low-vision mode is on. */
 export function isMotionAllowed(): boolean {
