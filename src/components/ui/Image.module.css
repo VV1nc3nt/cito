@@ -4,7 +4,8 @@
   align-items: center;
   justify-content: center;
   width: min(100%, var(--image-width, 100%));
-  min-height: var(--tap-min);
+  /* At least the image height; grows with a long alt at large text sizes. */
+  min-height: var(--image-height, var(--tap-min));
   padding: 12px;
   border: var(--btn-border-width) solid var(--text);
   color: var(--text);

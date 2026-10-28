@@ -30,7 +30,7 @@ export function Image({ alt, frameClassName, className, ...rest }: ImageProps) {
   const { width, height } = rest
   const size =
     typeof width === 'number' && typeof height === 'number'
-      ? ({ '--image-width': `${width}px`, aspectRatio: `${width} / ${height}` } as CSSProperties)
+      ? ({ '--image-width': `${width}px`, '--image-height': `${height}px` } as CSSProperties)
       : undefined
 
   const content = (
