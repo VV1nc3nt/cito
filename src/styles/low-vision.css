@@ -89,6 +89,8 @@
   --btn-secondary-bg-hover: var(--lv-bg);
   --btn-secondary-border: var(--lv-fg);
   --btn-secondary-fg: var(--lv-fg);
+  --btn-inverse-bg: var(--lv-bg);
+  --btn-inverse-fg: var(--lv-fg);
 
   /* Skip link */
   --skip-link-bg: var(--lv-bg);

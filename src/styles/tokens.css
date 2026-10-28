@@ -128,6 +128,8 @@
   --btn-secondary-bg-hover: var(--bg);
   --btn-secondary-border: var(--line-2);
   --btn-secondary-fg: var(--ink);
+  --btn-inverse-bg: var(--white); /* on the blue surface */
+  --btn-inverse-fg: var(--blue-700);
   --fs-button: 0.9375rem;
   --fs-button-sm: 0.875rem;
 
