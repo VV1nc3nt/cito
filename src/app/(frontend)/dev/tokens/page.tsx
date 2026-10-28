@@ -114,7 +114,7 @@ export default function TokensPage() {
                 <span className="nowrap">
                   сейчас <CssVar name={token} />
                 </span>{' '}
-                <span className="nowrap">{spec}</span>
+                <span>{spec}</span>
               </p>
               <p className={className}>Цифровая инфраструктура для образования и науки</p>
             </div>
