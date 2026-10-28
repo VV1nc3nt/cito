@@ -4,6 +4,7 @@ import React from 'react'
 import '@/styles/tokens.css'
 import '@/styles/base.css'
 
+import { Header } from '@/components/header/Header'
 import { SkipLink } from '@/components/SkipLink'
 
 import { jetbrainsMono, onest } from './fonts'
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru" className={`${onest.variable} ${jetbrainsMono.variable}`}>
       <body>
         <SkipLink />
+        <Header />
         <main id="main" tabIndex={-1}>
           {children}
         </main>

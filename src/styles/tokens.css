@@ -2,6 +2,9 @@
  * Design tokens — the single source of values for components (docs: 02-design-tokens).
  * Components use var(--token) only; no raw colours, radii or sizes elsewhere.
  *
+ * Font sizes are in rem so that they follow the root font size (browser setting and the
+ * low-vision mode, which sets 150% / 200% on <html>).
+ *
  * Breakpoints (media queries cannot read custom properties, so they are literals):
  *   desktop  ≥1200px  — base values below
  *   tablet   768–1199px — @media (max-width: 1199px)
@@ -76,19 +79,105 @@
 
   /* Type scale (H2 line-height and heading weight follow the reference layout) */
   --fw-heading: 600;
-  --fs-h1: clamp(40px, 4.4vw, 64px);
+  --fs-h1: clamp(2.5rem, 4.4vw, 4rem);
   --lh-h1: 1.04;
   --ls-h1: -0.03em;
-  --fs-h2: 44px;
-  --fs-h2-about: 42px;
+  --fs-h2: 2.75rem;
+  --fs-h2-about: 2.625rem;
   --lh-h2: 1.2;
   --ls-h2: -0.02em;
-  --fs-lead: 19px;
+  --fs-lead: 1.1875rem;
   --lh-lead: 1.55;
-  --fs-body: 18px;
+  --fs-body: 1.125rem;
   --lh-body: 1.6;
-  --fs-mono: 12px;
+  --fs-mono: 0.75rem;
   --ls-mono: 0.04em;
+  --ls-body: normal;
+  --lh-ui: 1.25; /* buttons, menu items and other single-line controls */
+
+  /* Wrapping of buttons and menu items; the low-vision mode allows it at large text sizes.
+     Numbers, dates and phone numbers use .nowrap and never wrap. */
+  --ui-nowrap: nowrap;
+
+  /* Surface context: overridden by [data-surface] below */
+  --surface-bg: var(--bg);
+  --surface-grid:
+    linear-gradient(var(--grid-line-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-light) 1px, transparent 1px);
+
+  /*
+   * Component tokens. Values from the reference layout that are not part of the palette.
+   * Every token added here must also get a value in low-vision.css.
+   */
+
+  /* Buttons */
+  --btn-border-width: 1px;
+  --btn-primary-bg: var(--blue-600);
+  --btn-primary-fg: var(--white);
+  --btn-primary-border: var(--blue-600);
+  --btn-primary-shadow: var(--shadow-button);
+  --btn-primary-hover-filter: brightness(1.1);
+  --btn-ghost-bg: rgba(255, 255, 255, 0.04);
+  --btn-ghost-bg-hover: rgba(255, 255, 255, 0.1);
+  --btn-ghost-border: rgba(255, 255, 255, 0.22);
+  --btn-ghost-fg: var(--white);
+  --btn-secondary-bg: var(--surface);
+  --btn-secondary-bg-hover: var(--bg);
+  --btn-secondary-border: var(--line-2);
+  --btn-secondary-fg: var(--ink);
+  --fs-button: 0.9375rem;
+  --fs-button-sm: 0.875rem;
+
+  /* Skip link */
+  --skip-link-bg: var(--ink);
+  --skip-link-fg: var(--white);
+  --skip-link-border: var(--ink);
+
+  /* Header */
+  --header-pad-y: 20px;
+  --header-border: rgba(255, 255, 255, 0.1);
+  --logo-plate-bg: var(--white);
+  --logo-plate-border: var(--white);
+  --logo-plate-shadow: 0 6px 18px -6px rgba(91, 120, 255, 0.7);
+  --fs-logo: 1.125rem;
+  --ls-logo: 0.02em;
+  --nav-link: var(--muted-dark);
+  --nav-link-hover: var(--white);
+  --nav-current: var(--white);
+  --nav-current-bar: var(--blue-300);
+  --fs-nav: 0.9375rem;
+
+  /* Mobile menu */
+  --menu-bg: var(--ink);
+  --menu-divider: rgba(255, 255, 255, 0.08);
+  --menu-icon-bg: rgba(91, 120, 255, 0.16);
+  --menu-icon-border: rgba(142, 162, 255, 0.3);
+  --menu-icon-fg: var(--blue-200);
+  --menu-chevron: var(--blue-300);
+  --menu-link-hover: var(--blue-300);
+  --fs-menu-item: 1.375rem;
+  --ls-menu-item: -0.01em;
+  --fs-menu-button: 1rem;
+  --contact-tile-bg: var(--ink-2);
+  --contact-tile-border: rgba(142, 162, 255, 0.22);
+  --contact-tile-border-hover: var(--blue-300);
+  --contact-tile-label: var(--muted-dark-3);
+  --contact-tile-icon: var(--blue-200);
+  --fs-contact-label: 0.8125rem;
+  --fs-contact-value: 1.0625rem;
+  --orbit-red: rgba(224, 72, 59, 0.35);
+  --orbit-blue: rgba(79, 107, 255, 0.4);
+  --orbit-grey: rgba(255, 255, 255, 0.12);
+
+  /* Dialogs */
+  --dialog-bg: var(--surface);
+  --dialog-border: var(--surface);
+  --dialog-shadow: 0 30px 80px -20px rgba(10, 16, 48, 0.5);
+  --dialog-backdrop: rgba(10, 16, 48, 0.6);
+  --dialog-radius: var(--radius-tile);
+  --option-border: var(--line-2-strong);
+  --option-border-checked: var(--blue-700);
+  --option-bg-checked: var(--icon-bg);
 }
 
 @media (max-width: 1199px) {
@@ -98,11 +187,13 @@
     --grid-gap: 12px;
     --tile-pad: 24px;
 
-    --fs-h1: 44px;
-    --fs-h2: 36px;
-    --fs-h2-about: 32px;
-    --fs-lead: 17px;
-    --fs-body: 17px;
+    --fs-h1: 2.75rem;
+    --fs-h2: 2.25rem;
+    --fs-h2-about: 2rem;
+    --fs-lead: 1.0625rem;
+    --fs-body: 1.0625rem;
+
+    --header-pad-y: 16px;
   }
 }
 
@@ -113,11 +204,13 @@
     --grid-gap: 12px;
     --tile-pad: 22px;
 
-    --fs-h1: 34px;
-    --fs-h2: 30px;
-    --fs-h2-about: 26px;
-    --fs-lead: 17px;
-    --fs-body: 16px;
+    --fs-h1: 2.125rem;
+    --fs-h2: 1.875rem;
+    --fs-h2-about: 1.625rem;
+    --fs-lead: 1.0625rem;
+    --fs-body: 1rem;
+
+    --header-pad-y: 12px;
   }
 }
 
@@ -129,11 +222,30 @@
   --focus-ring: var(--white);
 }
 
+[data-surface='light'] {
+  --text: var(--ink);
+  --text-muted: var(--muted);
+  --text-accent: var(--blue-700);
+  --focus-ring: var(--blue-700);
+  --surface-bg: var(--bg);
+  --surface-grid:
+    linear-gradient(var(--grid-line-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-light) 1px, transparent 1px);
+}
+
 [data-surface='dark'] {
   --text-accent: var(--blue-300);
+  --surface-bg: var(--ink);
+  --surface-grid:
+    linear-gradient(var(--grid-line-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-dark) 1px, transparent 1px);
 }
 
 [data-surface='blue'] {
+  --surface-bg: var(--blue-600);
+  --surface-grid:
+    linear-gradient(var(--grid-line-blue) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-blue) 1px, transparent 1px);
   /* --muted-dark is only 3.8:1 on --blue-600, below the 4.5:1 text minimum */
   --text-muted: var(--white);
   --text-accent: var(--white);

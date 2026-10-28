@@ -1,0 +1,143 @@
+.header {
+  background-color: var(--surface-bg);
+  background-image: var(--surface-grid);
+  background-size: var(--grid-step) var(--grid-step);
+  color: var(--text);
+}
+
+.inner {
+  border-bottom: 1px solid var(--header-border);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 40px;
+  padding-block: var(--header-pad-y);
+}
+
+/* Logo */
+
+.logo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: var(--lh-ui);
+}
+
+.logoName {
+  font-size: var(--fs-logo);
+  font-weight: 700;
+  letter-spacing: var(--ls-logo);
+}
+
+.logoTag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--ls-mono);
+  color: var(--text-accent);
+}
+
+/* Actions */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.appeal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap-min);
+  padding: 4px 18px;
+  border: var(--btn-border-width) solid var(--btn-primary-border);
+  border-radius: var(--radius-button);
+  background: var(--btn-primary-bg);
+  box-shadow: var(--btn-primary-shadow);
+  color: var(--btn-primary-fg);
+  font-size: var(--fs-button);
+  font-weight: 500;
+  line-height: var(--lh-ui);
+  text-align: center;
+  text-decoration: none;
+  white-space: var(--ui-nowrap);
+}
+
+.appeal:hover {
+  filter: var(--btn-primary-hover-filter);
+}
+
+/*
+ * Layout variants. Exactly one main navigation is displayed at any width; the others are
+ * removed with display: none so assistive technology sees only one.
+ *
+ *   desktop ≥1200: logo · inline nav · buttons
+ *   tablet 768–1199: logo · buttons / full-width nav row
+ *   mobile <768: logo · eye · «Меню» (the nav lives in the menu dialog)
+ *
+ * With large text in the low-vision mode (data-lv-size 2 or 3) the header steps one layout
+ * down: tablet layout from 1200px, mobile layout below. This is the one place outside the
+ * image component that knows about the mode: media queries cannot follow the root font size.
+ * Without JavaScript (no data-js on <html>) the mobile layout shows the nav row instead of
+ * the menu button.
+ *
+ * The rules below only hide; each element keeps its own display value.
+ */
+
+@media (max-width: 1199px) {
+  .header .desktopNav {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root:not([data-lv-size='2'], [data-lv-size='3']) .header .rowNav {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  :root:not([data-lv-size='2'], [data-lv-size='3']) .header .mobileOnly {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root:is([data-lv-size='2'], [data-lv-size='3']) .header .desktopNav,
+  .header .mobileOnly {
+    display: none;
+  }
+}
+
+@media (max-width: 1199px) {
+  :root:is([data-lv-size='2'], [data-lv-size='3']) .header .rowNav,
+  :root:is([data-lv-size='2'], [data-lv-size='3']) .header .wideOnly {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .header .wideOnly,
+  :root[data-js] .header .rowNav {
+    display: none;
+  }
+}
+
+:root:not([data-js]) .header .mobileOnly {
+  display: none;
+}

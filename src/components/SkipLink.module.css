@@ -8,10 +8,11 @@
   min-height: var(--tap-min);
   padding: 0 20px;
   border-radius: var(--radius-button);
-  background: var(--ink);
-  color: var(--white);
+  border: var(--btn-border-width) solid var(--skip-link-border);
+  background: var(--skip-link-bg);
+  color: var(--skip-link-fg);
   font-weight: 600;
-  white-space: nowrap;
+  white-space: var(--ui-nowrap);
   text-decoration: none;
   /* Visually hidden until focused */
   transform: translateY(calc(-100% - 16px));
