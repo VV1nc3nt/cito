@@ -1,6 +1,12 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, type ComponentPropsWithoutRef } from 'react'
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type ComponentPropsWithoutRef,
+  type KeyboardEvent,
+} from 'react'
 
 import styles from './Dialog.module.css'
 
@@ -15,9 +21,32 @@ type DialogProps = Omit<ComponentPropsWithoutRef<'dialog'>, 'open' | 'onCancel' 
   variant?: 'fullscreen' | 'centered'
 }
 
+const TABBABLE =
+  'a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
+
+/** Tab from the last control goes to the first and back, instead of into the browser UI. */
+function trapTab(event: KeyboardEvent<HTMLDialogElement>) {
+  if (event.key !== 'Tab') return
+  const tabbable = [...event.currentTarget.querySelectorAll<HTMLElement>(TABBABLE)].filter(
+    (el) =>
+      el.getClientRects().length > 0 &&
+      !(el instanceof HTMLInputElement && el.type === 'radio' && !el.checked),
+  )
+  if (tabbable.length === 0) return
+  const first = tabbable[0]
+  const last = tabbable[tabbable.length - 1]
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault()
+    last.focus()
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault()
+    first.focus()
+  }
+}
+
 /**
- * Modal dialog on the native <dialog> and showModal(): the rest of the page becomes inert,
- * so the focus stays inside; Esc fires `cancel`. While it is open the page does not scroll.
+ * Modal dialog on the native <dialog> and showModal(): the rest of the page becomes inert
+ * and Tab cycles inside; Esc fires `cancel`. While it is open the page does not scroll.
  */
 export function Dialog({
   open,
@@ -74,6 +103,7 @@ export function Dialog({
     <dialog
       ref={ref}
       className={`${styles.dialog} ${styles[variant]} ${className ?? ''}`}
+      onKeyDown={trapTab}
       {...rest}
     >
       {children}
